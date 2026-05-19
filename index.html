@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Signal Habit Lab</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="rail" aria-label="Primary">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32" role="img">
+              <path d="M5 19.5c5.7-13 16.4-13 22 0" />
+              <path d="M9 20.5c3.9-7.8 10.2-7.8 14 0" />
+              <path d="M13.5 21.5c1.7-2.7 3.3-2.7 5 0" />
+              <circle cx="16" cy="24" r="2" />
+            </svg>
+          </span>
+          <span>
+            <strong>Signal</strong>
+            <small>Habit Lab</small>
+          </span>
+        </div>
+
+        <nav class="nav-tabs" aria-label="Views">
+          <button class="tab-button is-active" data-view="today">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M8 2v4M16 2v4M3 10h18M5 5h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z" />
+            </svg>
+            Today
+          </button>
+          <button class="tab-button" data-view="insights">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 19V5M4 19h16M8 16v-5M13 16V8M18 16v-9" />
+            </svg>
+            Signals
+          </button>
+          <button class="tab-button" data-view="experiments">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M10 2v6L5 18a3 3 0 0 0 2.7 4h8.6A3 3 0 0 0 19 18L14 8V2" />
+              <path d="M8 2h8M8 14h8" />
+            </svg>
+            Experiments
+          </button>
+        </nav>
+
+        <div class="rail-panel">
+          <p class="eyebrow">This week</p>
+          <div class="focus-score">
+            <span id="weekScore">0%</span>
+            <small>baseline kept</small>
+          </div>
+          <div class="score-bars" id="scoreBars" aria-label="Weekly baseline score"></div>
+        </div>
+      </aside>
+
+      <main>
+        <header class="topbar">
+          <div>
+            <p class="eyebrow" id="todayLabel">Today</p>
+            <h1>Build habits by finding the signal.</h1>
+          </div>
+          <button class="primary-button" id="openAddHabit">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 5v14M5 12h14" />
+            </svg>
+            Add Habit
+          </button>
+        </header>
+
+        <section class="view is-active" id="todayView" aria-labelledby="todayLabel">
+          <div class="today-grid">
+            <section class="panel habit-workbench" aria-label="Today habits">
+              <div class="section-head">
+                <div>
+                  <p class="eyebrow">Check in</p>
+                  <h2>Today's habit lab</h2>
+                </div>
+                <button class="ghost-button" id="resetDemo">Reset Demo</button>
+              </div>
+              <div class="habit-list" id="habitList"></div>
+            </section>
+
+            <section class="side-stack" aria-label="Today guidance">
+              <article class="panel">
+                <p class="eyebrow">Different by design</p>
+                <h2>Anti-streak coaching</h2>
+                <p class="plain-copy">Signal rewards the smallest honest version of a habit and studies the conditions around it. You get recovery routes and experiments instead of a wall of broken chains.</p>
+                <div class="insight-card" id="dailyNudge"></div>
+              </article>
+
+              <article class="panel compact-panel">
+                <div class="section-head tight">
+                  <div>
+                    <p class="eyebrow">Fast context</p>
+                    <h2>What shaped today?</h2>
+                  </div>
+                </div>
+                <fieldset class="context-field">
+                  <legend>Energy</legend>
+                  <div class="segmented" id="energyPicker">
+                    <button data-energy="low">Low</button>
+                    <button data-energy="steady" class="is-selected">Steady</button>
+                    <button data-energy="high">High</button>
+                  </div>
+                </fieldset>
+                <fieldset class="context-field">
+                  <legend>Friction</legend>
+                  <label class="range-row">
+                    <span>Light</span>
+                    <input type="range" id="frictionSlider" min="1" max="5" value="2" />
+                    <span>Heavy</span>
+                  </label>
+                </fieldset>
+                <fieldset class="context-field">
+                  <legend>Environment</legend>
+                  <div class="chip-row" id="environmentPicker">
+                    <button class="chip is-selected" data-env="home">Home</button>
+                    <button class="chip" data-env="office">Office</button>
+                    <button class="chip" data-env="outside">Outside</button>
+                    <button class="chip" data-env="travel">Travel</button>
+                  </div>
+                </fieldset>
+              </article>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="insightsView" aria-label="Signals">
+          <div class="insights-grid">
+            <section class="panel wide-panel">
+              <div class="section-head">
+                <div>
+                  <p class="eyebrow">Evidence map</p>
+                  <h2>What your habits are telling you</h2>
+                </div>
+                <span class="soft-pill" id="loggedCount">0 logs</span>
+              </div>
+              <div class="signal-grid" id="signalGrid"></div>
+            </section>
+
+            <section class="panel">
+              <p class="eyebrow">Pattern finder</p>
+              <h2>Best conditions</h2>
+              <div class="condition-list" id="conditionList"></div>
+            </section>
+
+            <section class="panel wide-panel">
+              <div class="section-head">
+                <div>
+                  <p class="eyebrow">14-day signal</p>
+                  <h2>Reliability without streak shame</h2>
+                </div>
+                <button class="ghost-button" id="exportData">Export Data</button>
+              </div>
+              <div class="timeline" id="timeline"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="experimentsView" aria-label="Experiments">
+          <div class="experiment-layout">
+            <section class="panel">
+              <div class="section-head">
+                <div>
+                  <p class="eyebrow">Next smallest change</p>
+                  <h2>Run habit experiments</h2>
+                </div>
+                <button class="primary-button" id="createExperiment">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 5v14M5 12h14" />
+                  </svg>
+                  New Test
+                </button>
+              </div>
+              <div class="experiment-list" id="experimentList"></div>
+            </section>
+
+            <section class="panel">
+              <p class="eyebrow">Why it stands out</p>
+              <h2>Built around behavior loops</h2>
+              <div class="loop-stack">
+                <div>
+                  <span>1</span>
+                  <p><strong>Start with a minimum.</strong> Every habit has a tiny version that keeps identity intact on bad days.</p>
+                </div>
+                <div>
+                  <span>2</span>
+                  <p><strong>Capture the conditions.</strong> Energy, place, friction, and notes become useful evidence.</p>
+                </div>
+                <div>
+                  <span>3</span>
+                  <p><strong>Ship an experiment.</strong> The app suggests one change at a time, then checks if the change worked.</p>
+                </div>
+              </div>
+            </section>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="habitDialog">
+      <form method="dialog" class="dialog-card" id="habitForm">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">New habit</p>
+            <h2>Design the minimum viable version</h2>
+          </div>
+          <button class="icon-button" type="button" data-close-dialog="habitDialog" aria-label="Close">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M18 6 6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <label>
+          Habit name
+          <input name="name" required maxlength="36" placeholder="Read before bed" />
+        </label>
+        <label>
+          Tiny version
+          <input name="minimum" required maxlength="54" placeholder="Read one page" />
+        </label>
+        <label>
+          Best cue
+          <input name="cue" required maxlength="54" placeholder="After brushing teeth" />
+        </label>
+        <label>
+          Friction to remove
+          <input name="friction" required maxlength="64" placeholder="Phone on nightstand" />
+        </label>
+        <button class="primary-button full-button" value="default">Create Habit</button>
+      </form>
+    </dialog>
+
+    <dialog id="exportDialog">
+      <form method="dialog" class="dialog-card export-card">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Export</p>
+            <h2>Your habit signal data</h2>
+          </div>
+          <button class="icon-button" type="button" data-close-dialog="exportDialog" aria-label="Close">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M18 6 6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <textarea id="exportText" readonly></textarea>
+      </form>
+    </dialog>
+
+    <script src="app.js"></script>
+  </body>
+</html>
